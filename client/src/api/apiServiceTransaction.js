@@ -1,7 +1,9 @@
 import axios from "axios";
 import M from "materialize-css";
 
-const API_URL = "http://localhost:3001/api/transaction/period/";
+// const API_URL = "http://localhost:3001/api/transaction/period/";
+const API_URL =
+  "https://controlefinanceirodesafiofinal.herokuapp.com/api/transaction/period/";
 
 async function getTransactionByPeriod(period) {
   try {
