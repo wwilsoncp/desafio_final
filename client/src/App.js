@@ -5,6 +5,7 @@ import * as api from "./api/apiServiceTransaction";
 import TransactionControl from "./components/TransactionControl.js";
 import ModalTransaction from "./components/ModalTransaction";
 import TransactionTotalizer from "./components/TransactionTotalizer";
+import Spinner from "./components/Spinner";
 
 export default function App() {
   const [fullTransactions, setFullTransaction] = React.useState([]);
@@ -39,8 +40,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    // const URL = `http://fake-desafio-final.herokuapp.com/api/transaction?period=${currentPeriod}`;
-    getTransactions();
+    setFilteredTransactions([]);
+    setTimeout(() => {
+      getTransactions();
+    }, 1000);
   }, [currentPeriod]);
 
   useEffect(() => {
@@ -163,7 +166,6 @@ export default function App() {
         >
           <button
             className="waves-effect waves-lights btn"
-            // disabled={errorMessage.trim() !== ""}
             onClick={handleOnClickButtonMesAnterior}
             disabled={propDisabledMesAnterior}
           >
@@ -187,7 +189,6 @@ export default function App() {
 
           <button
             className="waves-effect waves-lights btn"
-            // disabled={errorMessage.trim() !== ""}
             onClick={handleOnClickButtonMesSeguinte}
             disabled={propDisabledMesSeguinte}
           >
@@ -196,15 +197,19 @@ export default function App() {
         </div>
       )}
 
-      <div>
-        {filteredTransactions && (
-          <TransactionTotalizer
-            transactions={filteredTransactions}
-          ></TransactionTotalizer>
-        )}
-      </div>
+      {filteredTransactions.length === 0 && (
+        <div style={{ marginTop: "10px" }}>
+          <Spinner>Carregando transações...</Spinner>
+        </div>
+      )}
 
-      {!isModalOpen && (
+      {filteredTransactions.length > 0 && (
+        <TransactionTotalizer
+          transactions={filteredTransactions}
+        ></TransactionTotalizer>
+      )}
+
+      {!isModalOpen && filteredTransactions.length > 0 && (
         <div
           style={{
             display: "flex",

@@ -1,5 +1,6 @@
 import React from "react";
 import Action from "./Action";
+import { formatMonetary } from "../helpers/formatHelpers";
 
 export default function TransactionControl(props) {
   // desestruturando de props
@@ -26,10 +27,10 @@ export default function TransactionControl(props) {
       {transactions.map((transaction) => {
         const { _id, day, category, value, type, description } = transaction;
         if (oldDay !== day) {
-          marginAux = "20px 5px 5px";
+          marginAux = "20px 0px 0px";
           oldDay = day;
         } else {
-          marginAux = "5px";
+          marginAux = "5px 0px";
         }
 
         return (
@@ -62,7 +63,7 @@ export default function TransactionControl(props) {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 justifyContent: "center",
-                width: "50%",
+                width: "65%",
               }}
             >
               <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
@@ -76,17 +77,18 @@ export default function TransactionControl(props) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "flex-end",
-                width: "15%",
+                width: "20%",
+                fontSize: "1.6rem",
               }}
             >
-              <div>R$ {value}</div>
+              <div>{formatMonetary(value)}</div>
             </div>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "flex-end",
-                width: "30%",
+                width: "10%",
               }}
             >
               <Action id={_id} onActionClick={handleActionClick} type="edit" />
